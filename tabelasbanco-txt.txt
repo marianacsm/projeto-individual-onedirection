@@ -1,0 +1,5 @@
+Criar uma tabela álbum contendo todos os albuns disponíveis, que conterá id, nome do álbum e data de lançamento.
+Esses albuns irão ser passados para o front end por meio de uma requisição e será exibido em escolhas múltiplas para votação.
+
+Criar uma tabela votação que conterá o id da votação, o nome do usuário, e uma fkAlbum para que consiga fazer um select do tipo
+count e retornar todas as votações de determinado album (por exemplo).

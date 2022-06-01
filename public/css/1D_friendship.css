@@ -218,6 +218,11 @@ order: 1;
         order: 1;
             }            
 
+.checkbox-texto {
+    font-family: 'Anybody',cursive;
+    font-size: 20px;
+    font-weight: 500px;
+}
 /* Customize the label (the container) */
 .container {
     display: block;

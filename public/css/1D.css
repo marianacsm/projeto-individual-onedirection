@@ -41,6 +41,11 @@ height: 80px;
   flex-direction: left;
   justify-content: center;
 }
+.href {
+  font-family: 'Anybody',cursive;
+  font-size: 20px;
+  font-weight: 500px;
+}
 /* fim da header  */
 
 .banner{
@@ -70,6 +75,18 @@ width: 300px;
 border-radius: 3px;
 margin-top: 20px;
 }
+.titulo-card-cadastro {
+  font-family: 'Anybody',cursive;
+  font-size: 20px;
+  font-weight: 500px;
+}
+.campo {
+  margin-top: 20px;
+  font-family: 'Anybody',cursive;
+  font-size: 20px;
+  font-weight: 500px;
+}
+
 .cadastro_conteudo input{
 height: 30px;
 width: 250px ;
@@ -91,12 +108,16 @@ background-color:#11001c;
 color: #fff;
 }
 
-/* .btn {
+.btn {
   display: flex;
   height: 80px;
+  align-items: center;
   border-color: #11001c;
   border-radius: 10px;
-} */
+    font-family: 'Anybody',cursive;
+    font-size: 20px;
+    font-weight: 500px;
+}
 /* FIM CADASTRO */
 
 

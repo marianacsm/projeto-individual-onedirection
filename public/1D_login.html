@@ -6,7 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ONE DIRECTION</title>
-    <link rel="stylesheet" href="1D.css">
+    <link rel="stylesheet" href="1Dlogin.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anybody:wght@300;400&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -29,21 +32,14 @@
     <div class="banner">
         <div class="container_banner">
             <div class="card_cadastro">
-                <h2>Cadastro</h2>
+                <h2 class="titulo-card-login">Login</h2>
                 <div class="cadastro_conteudo">
-                    <span class="campo">Nome:</span> <br>
-                    <input id="in_nome" type="text" placeholder="Seu nome">
-                    <br>
                     <span class="campo">E-mail:</span> <br>
                     <input id="in_email" type="text" placeholder="Seu email">
                     <br>
                     <span class="campo">Senha:</span> <br>
                     <input id="in_senha" type="password" placeholder="******">
-                    <br>
-                    <span class="campo">Confirmação da Senha:</span> <br>
-                    <input id="in_confirmacao" type="password" placeholder="******">
-                    <br>
-                    <button class="btn" onclick="cadastrar()">Cadastrar</button>
+                    <button class="btn" onclick="login()">Login</button>
                 </div>
             </div>
         </div>
