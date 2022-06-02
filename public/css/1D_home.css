@@ -45,7 +45,7 @@ body {
 
 .banner_home {
     height: 900px;
-    background-image:url("fundo_home.jpg");
+    background-image:url("../assets/imgs/fundo_home.jpg");
     background-size: 100%;
 }
 

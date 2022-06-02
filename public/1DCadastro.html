@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ONE DIRECTION</title>
-    <link rel="stylesheet" href="1D.css"> 
+    <link rel="stylesheet" href="./css/1D.css"> 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anybody:wght@300;400&display=swap" rel="stylesheet">
@@ -18,11 +18,11 @@
         <div class="container">
             <div class="navbar">
                 <div class="titulo-navbar">
-                    <h1 class="titulo_pag_cadastro"><img src="ONE-DIRECTION-LOGO.png"
+                    <h1 class="titulo_pag_cadastro"><img src="./assets/imgs/ONE-DIRECTION-LOGO.png"
                     style="height: 100px;"></h1>
                 </div>
                 <div class="href">
-                    <a href="1Dhome.html" onclick="tocarSom()">I WILL MAKE YOU FEEL LIKE
+                    <a href="index.html" onclick="tocarSom()">I WILL MAKE YOU FEEL LIKE
                         <b><u>HOME</u></b>
                     </a>
                 </div>
@@ -30,6 +30,11 @@
         </div>
     </div>
     <div class="banner">
+        <div class="alerta_erro">
+            <div class="card_erro" id="cardErro">
+                <span id="mensagem_erro"></span>
+            </div>
+        </div>
         <div class="container_banner">
             <div class="card_cadastro">
                 <h2 class="titulo-card-cadastro">CADASTRO</h2>
@@ -43,10 +48,26 @@
                     <span class="campo">Senha:</span> <br>
                     <input id="in_senha" type="password" placeholder="******">
                     <br>
-                    <span class="campo">Confirmação da Senha:</span> <br>
-                    <input id="in_confirmacao" type="password" placeholder="******">
-                    <br>
+                    <span class="campo">Álbum favorito:</span>
+                    <div class="select-style">
+                    <select id="sel_album">
+                    </p>
+                    <option value="">--Selecione o álbum--</option>
+                    <option value="1">UP ALL NIGHT</option>
+                    <option value="2">TAKE ME HOME</option>
+                    <option value="3">MIDNIGHT MEMORIES</option>
+                    <option value="4">FOUR</option>
+                    <option value="5">MADE IN THE A.M</option>
+                    </select>
+                </div>
                     <button class="btn" onclick="cadastrar()">Cadastrar</button>
+                </div>
+                <div id="div_aguardar" class="loading-div">
+                    <img src="./assets/imgs/circle-loading.gif" id="loading-gif">
+                </div>
+
+                <div id="div_erros_login">
+
                 </div>
             </div>
         </div>
@@ -66,11 +87,12 @@
 
         //Recupere o valor da nova input pelo nome do id
         // Agora vá para o método fetch logo abaixo
-        var nomeVar = nome_input.value;
-        var emailVar = email_input.value;
-        var senhaVar = senha_input.value;
+        var nomeVar = in_nome.value;
+        var emailVar = in_email.value;
+        var senhaVar = in_senha.value;
+        var albumVar = sel_album.value;
 
-        if (nomeVar == "" || emailVar == "" || senhaVar == "") {
+        if (nomeVar == "" || emailVar == "" || senhaVar == "" || albumVar == "") {
             cardErro.style.display = "block"
             mensagem_erro.innerHTML = "(Mensagem de erro para todos os campos em branco)";
 
@@ -92,7 +114,8 @@
                 // Agora vá para o arquivo routes/usuario.js
                 nomeServer: nomeVar,
                 emailServer: emailVar,
-                senhaServer: senhaVar
+                senhaServer: senhaVar,
+                albumServer: albumVar
             })
         }).then(function (resposta) {
 
@@ -104,7 +127,7 @@
                 mensagem_erro.innerHTML = "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
 
                 setTimeout(() => {
-                    window.location = "login.html";
+                    window.location = "1D_login.html";
                 }, "2000")
 
                 limparFormulario();
