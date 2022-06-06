@@ -7,14 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ONE DIRECTION</title>
     <link rel="stylesheet" href="./css/1D_home.css">
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anybody:wght@300;400&display=swap" rel="stylesheet">
 </head>
 
 <body>
     <div class="header_home">
         <div class="container_home">
             <div class="invisivel"></div>
-            <h1 class="titulo_pag_home"><img src="./assets/imgs/ONE-DIRECTION-LOGO.png" style="height: 100px; width: 350px;"></h1>
+            <h1 class="titulo_pag_home"><img src="./assets/imgs/ONE-DIRECTION-LOGO.png"
+                    style="height: 100px; width: 350px;"></h1>
             <div class="audio">
                 <iframe style="border-radius: 8px"
                     src="https://open.spotify.com/embed/playlist/37i9dQZF1DX6p4TJxzMRDe?utm_source=generator&theme=0"
@@ -34,7 +37,68 @@
             </a>
         </div>
     </div>
+    <div class="tudo">
+        <div class="container-simulador">
+            <div class="card-simulador">
+                <div class="titulo-card-simulador">
+                    SAIBA QUÃO FÃ VOCÊ É
+                </div>
+                <br>
+                <select id="sel_albuns">
+                    <option hidden value="">selecione um álbum</option>
+                    <option value="63">UP ALL NIGHT</option>
+                    <option value="64">TAKE ME HOME</option>
+                    <option value="60">MIDNIGHT MEMORIES</option>
+                    <option value="57">FOUR</option>
+                    <option value="59">MADE IN THE AM</option>
+                </select>
+                <br> <br>
+                <div class="pergunta">
+                    <span>
+                        QUANTAS VEZES APROXIMADAMENTE <br>
+                        <span id="pergunta-alinhamento">VOCÊ OUVIU O ÁLBUM?</span>
+                    </span>
+                </div>
+                <br>
+                <div class="input">
+                    <input placeholder="VEZES QUE OUVIU O ÁLBUM" style="width: 200px;" type="number" id="in_ouviu">
+                </div>
+                <br> <br>
+                    <button class="btn-simulador" onclick="verificar()">Verificar</button>
+                <br> <br>
+                <div id="div_frase"></div>
+            </div>
+        </div>
+    </div>
 
 </body>
 
 </html>
+
+<script>
+     function verificar() {
+        var ouviu = Number(in_ouviu.value)
+        var album = Number(sel_albuns.value)
+        var conta = Number(((album * ouviu) / 60).toFixed(2))
+
+        if (ouviu <= 0 || '') {
+            alert('OIOIII PÕE ALGUMA COISA LUVE')
+        }
+        if (album <=0 || '') {
+            alert('OIOIII PÕE ALGUMA COISA LUVE')
+        }
+
+        if (conta >= 100) {
+            div_frase.innerHTML = `OBVIOUSLY VOCÊ É OBCECADX!! Você ouviu esse álbum por ${conta} horas, e olha que ele tem ${album} minutos!!`
+        }
+        if (conta >= 50 && conta < 100) {
+            div_frase.innerHTML = `VASHAPPENING!!! Você gosta bastante, continue assim. Você ouviu esse álbum por ${conta} horas, e ele tem ${album} minutos!`
+        }
+        if (conta <50 && conta >= 20) {
+            div_frase.innerHTML = `WE TOOK A CHONCE e você é fãzinho... Você ouviu esse álbum por apenas ${conta} horas. E ele tem ${album} minutos.`
+        }
+        if (conta < 20 && conta > 0) {
+            div_frase.innerHTML = `NO JIMMY PROTESTED! Ainda se diz fã? Você ouviu esse álbum por somente ${conta} horas... E ele tem só <b>${album}</b> minutos.`
+        }
+    }
+</script>

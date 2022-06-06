@@ -1,0 +1,79 @@
+body {
+    background-image: url("../assets/imgs/fundo-simulador.webp");
+    background-size: cover;
+    margin: 0px;
+}
+  .header-simulador {
+  width: 100%;
+  height: 100px;
+  background-color:#000000;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  }
+  .container-header {
+width: 100%;
+height: 150px;
+display: flex;
+justify-content: space-around;
+align-items: center;
+  }
+  .navbar-simulador {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color:#F22116;
+  width: 100%;
+  height: 80px;
+  }
+  .titulo-navbar-simulador {
+      margin-left: 20px;
+  }
+  .titulo-simulador{
+  color:#F22116;
+  font-weight: 300px;
+  }
+  .navbar-simulador a {
+    text-decoration: none;
+    color: #F22116;
+    margin-right: 20px;
+  }
+  .navbar-simulador u {
+    display: flex;
+    flex-direction: left;
+    justify-content: center;
+  }
+  .href {
+    font-family: 'Anybody',cursive;
+    font-size: 20px;
+    font-weight: 500px;
+    margin-right: 20px;
+  }
+  .tudo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+.container-simulador {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    margin-top: 25px;
+}
+.card-simulador {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+    width: 500px;
+    background-color: #f22116be;
+    border-radius: 3px;
+}
+ .titulo-card-simulador {
+    font-family: 'Anybody',cursive;
+    font-size: 20px;
+    font-weight: 500px;
+ }

@@ -82,7 +82,8 @@
         else {
             setInterval(sumirMensagem, 5000)
         }
-
+        
+        // COLOCAR ESSA VALIDAÇÃO NO CADASTRO
         if (emailVar.indexOf("@") == -1 || emailVar.indexOf(".com") == -1) {
             cardErro.style.display = "block"
             mensagem_erro.innerHTML = "Ops, e-mail inválido! Verifique e tente novamente.";
@@ -120,7 +121,7 @@
                     sessionStorage.ID_USUARIO = json.id;
 
                     setTimeout(function () {
-                        window.location = "./1D_albunsdash.html";
+                        window.location = "../dashboard/1D_albunsdash.html";
                     }, 1000); // apenas para exibir o loading
 
                 });

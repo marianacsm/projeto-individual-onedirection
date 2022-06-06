@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ONE DIRECTION</title>
+    <link rel="stylesheet" href="./dashboard/1D-dash.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anybody:wght@300;400&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="header-dash">
+    </div>
+    <div class="texto">
+       <p>*ARRASTE AS IMAGENS*</p> 
+   </div> 
+    <div class="container-curiosidades-albuns" style="overflow-x: hidden">
+        <div class="curiosidades">
+            <span>
+            1ª Durante as gravações de what makes you beautiful <br>
+            a banda foi parada duas vezes por diregir muito <br>
+            devagar na estrada
+            </span>
+            <br>
+            <span>
+            2ª O Liam audicionou duas vezes no x-factor, mas foi rejeitado na
+            primeira pois era muito novo
+            </span>
+            <br>
+            <span>
+            3ª Os meninos performaram 'little things' para a rainha   
+            </span>
+            <br>
+            <span>
+            4ª O Harry trabalhou em uma padaria antes de se juntar à banda
+            </span>
+            <br>
+            <span>
+            5ª Durante a live do 1D day, os meninos tentaram quebrar o record
+            de maior torre de papel higiênico
+            </span>
+            <br>
+            <span>
+            6ª Louis e Zayn tem tatuagens iguais 'BUS 1', em homenagem ao tempo 
+            que passaram juntos <br> em ônibus de tour
+            </span>
+            <br>
+            <span>
+            7ª Zayn saiu da banda dizendo que queria ser 'um garoto normal de 22 anos'
+            </span>
+        </div>
+            <div class="container_albuns">
+               <div class="img_uan">
+                   <div id="uan">
+                       <img id="uan_img" src="../assets/imgs/1album.jpg" style="height: 350px">
+                   </div>
+               </div>
+               <div class="img_tmh">
+                   <div id="tmh">
+                       <img id="tmh_img" src="../assets/imgs/2album.jpg" style="height: 350px">
+                   </div>
+               </div>
+               <div class="img_mm">
+                   <div id="mm">
+                       <img id="mm_img" src="../assets/imgs/3album.jpg" style="height: 350px">
+                   </div>
+               </div>
+               <div class="img_four">
+                   <div id="four">
+                       <img id="four_img" src="../assets/imgs/4album.jpg" style="height: 350px">
+                   </div>
+               </div>
+               <div class="img_mita">
+                   <div id="mita">
+                       <img id="mita_img" src="../assets/imgs/5album.jpg" style="height: 350px">
+                   </div>
+               </div> 
+           </div>
+    </div>
+        <div id="titulo-chart">ÁLBUM FAVORITO DAS PESSOAS:</div>
+    <div class="container_dash">
+        <div class="album_graphic">
+            <canvas id="canvas_grafico" style="display: block;" width="700px" height="390px" class="chartjs-render-monitor"></canvas>
+    </div>
+
+   
+</body>
+
+</html>
+<script>
+    let proximaAtualizacao;
+
+    window.onload = obterDadosGrafico();
+
+    // b_usuario.innerHTML = sessionStorage.usuario.nome;
+
+
+    function alterarTitulo(albumFav) {
+        var tituloAlbum = document.getElementById("tituloGrafico")
+    }
+
+    // O gráfico é construído com três funções:
+    // 1. obterDadosGrafico -> Traz dados do Banco de Dados para montar o gráfico da primeira vez
+    // 2. plotarGrafico -> Monta o gráfico com os dados trazidos e exibe em tela
+    // 3. atualizarGrafico -> Atualiza o gráfico, trazendo novamente dados do Banco
+
+    // Esta função obterDadosGrafico busca os últimos dados inseridos em tabela de medidas.
+    // para, quando carregar o gráfico da primeira vez, já trazer com vários dados.
+    // A função obterDadosGrafico também invoca a função plotarGrafico
+
+    //     Se quiser alterar a busca, ajuste as regras de negócio em src/controllers
+    //     Para ajustar o "select", ajuste o comando sql em src/models
+
+    function obterDadosGrafico() {
+
+        if (proximaAtualizacao != undefined) {
+            clearTimeout(proximaAtualizacao);
+        }
+
+        fetch(`/medidas/ultimas`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    // resposta.reverse();
+                    plotarGrafico(resposta);
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+    }
+
+    // Esta função plotarGrafico usa os dados capturados na função anterior para criar o gráfico
+    // Configura o gráfico (cores, tipo, etc), materializa-o na página e,
+    // A função plotarGrafico também invoca a função atualizarGrafico
+    function plotarGrafico(resposta, albumFav) {
+        console.log('iniciando plotagem do gráfico...');
+
+        var dados = {
+            labels: [],
+            datasets: [
+                {
+                    yAxisID: 'y-quantidade',
+                    label: 'Quantidade',
+                    borderColor: ['#FF0000', '#00FF00', '#0000FF', '#FFFF00', '	#FFA500'],
+                    backgroundColor: ['#FF0000', '#00FF00', '#0000FF', '#FFFF00', '	#FFA500'],
+                    fill: true,
+                    data: []
+                }
+                // {
+                //   yAxisID: 'y-quantidade',
+                //   label: 'Quantidade',
+                //   borderColor: '#ffffff',
+                //   backgroundColor: ['#40120f','#012c07','#aa8e08','#011f3b',],
+                //   fill: true,
+                //   data: []
+                // }
+            ]
+        };
+
+        for (i = 0; i < resposta.length; i++) {
+            var registro = resposta[i];
+            console.log(registro)
+            dados.labels.push(registro.titulo);
+            dados.datasets[0].data.push(registro.quantidade);
+        }
+
+        console.log(JSON.stringify(dados));        
+
+        var ctx = document.getElementById('canvas_grafico').getContext('2d');
+        window.grafico_barra = new Chart(ctx, {
+            type: 'doughnut',
+            data: dados,
+            options: {
+                responsive: true,
+                animation: { duration: 500 },
+                hoverMode: 'index',
+                stacked: false,
+                title: {
+                    display: false,
+                    text: 'Dados capturados'
+                },
+                scales: {
+                    yAxes: [{
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        id: 'y-quantidade',
+                        ticks: {
+                            beginAtZero: true,
+                            max: 30,
+                            min: 0
+                        }
+                    }],
+                }
+            }
+        });
+
+
+    }
+
+    // Esta função atualizarGrafico atualiza o gráfico que foi renderizado na página,
+    // buscando a última medida inserida em tabela contendo as capturas,
+
+    //     Se quiser alterar a busca, ajuste as regras de negócio em src/controllers
+    //     Para ajustar o "select", ajuste o comando sql em src/models
+
+    function atualizarGrafico(albumFav, dados) {
+
+        let fkAlbum = sessionStorage.fkAlbum;
+
+        fetch(`/usuario/tempo-real/${fkAlbum}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (novoRegistro) {
+
+                    console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
+                    console.log(`Dados atuais do gráfico: ${dados}`);
+
+                    // tirando e colocando valores no gráfico
+                    // dados.labels.shift(); // apagar o primeiro
+                    // dados.labels.push(novoRegistro[0].nome); // incluir um novo momento
+                   
+                    dados.labels = [];
+                    dados.datasets[0].data = [];
+
+
+                    for (i = 0; i < novoRegistro.length; i++) {
+                        var registro = novoRegistro[i];
+                        dados.labels.push(registro.titulo);
+                        dados.datasets[1].data.push(registro.quantidade);
+                    }
+
+                    // dados.datasets[0].data.shift();  // apagar o primeiro de umidade
+                    // dados.datasets[0].data.push(novoRegistro[0].nome); comentei isso aqui  // incluir uma nova medida de umidade
+
+                    // dados.datasets[1].data.shift();  // apagar o primeiro de temperatura
+                    // dados.datasets[1].data.push(novoRegistro[0].quantidade); // incluir uma nova medida de temperatura
+
+                    window.grafico_barra.update();
+
+                    // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
+                    proximaAtualizacao = setTimeout(() => atualizarGrafico(albumFav, fkAlbum), 2000);
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+                // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
+                proximaAtualizacao = setTimeout(() => atualizarGrafico(albumFav, dados), 2000);
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+
+    }
+</script>
+
+<script>
+    // const myChart = new Chart(
+    //     document.getElementById('myChart'),
+    //     config
+    // );
+
+
+    //Make the DIV element draggagle:
+    dragElement(document.getElementById("uan"));
+
+    function dragElement(elmnt) {
+        var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+        if (document.getElementById(elmnt.uan)) {
+            /* if present, the header is where you move the DIV from:*/
+            document.getElementById(elmnt.uan).onmousedown = dragMouseDown;
+        } else {
+            /* otherwise, move the DIV from anywhere inside the DIV:*/
+            elmnt.onmousedown = dragMouseDown;
+        }
+        function dragMouseDown(e) {
+            e = e || window.event;
+            e.preventDefault();
+            // get the mouse cursor position at startup:
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            document.onmouseup = closeDragElement;
+            // call a function whenever the cursor moves:
+            document.onmousemove = elementDrag;
+        }
+
+        function elementDrag(e) {
+            e = e || window.event;
+            e.preventDefault();
+            // calculate the new cursor position:
+            pos1 = pos3 - e.clientX;
+            pos2 = pos4 - e.clientY;
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            // set the element's new position:
+            elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+            elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+        }
+
+        function closeDragElement() {
+            /* stop moving when mouse button is released:*/
+            document.onmouseup = null;
+            document.onmousemove = null;
+        }
+    }
+    //Make the DIV element draggagle:
+    dragElement(document.getElementById("tmh"));
+
+    function dragElement(elmnt) {
+        var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+        if (document.getElementById(elmnt.tmh)) {
+            /* if present, the header is where you move the DIV from:*/
+            document.getElementById(elmnt.tmh).onmousedown = dragMouseDown;
+        } else {
+            /* otherwise, move the DIV from anywhere inside the DIV:*/
+            elmnt.onmousedown = dragMouseDown;
+        }
+        function dragMouseDown(e) {
+            e = e || window.event;
+            e.preventDefault();
+            // get the mouse cursor position at startup:
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            document.onmouseup = closeDragElement;
+            // call a function whenever the cursor moves:
+            document.onmousemove = elementDrag;
+        }
+
+        function elementDrag(e) {
+            e = e || window.event;
+            e.preventDefault();
+            // calculate the new cursor position:
+            pos1 = pos3 - e.clientX;
+            pos2 = pos4 - e.clientY;
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            // set the element's new position:
+            elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+            elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+        }
+
+
+        function closeDragElement() {
+            /* stop moving when mouse button is released:*/
+            document.onmouseup = null;
+            document.onmousemove = null;
+        }
+    }//Make the DIV element draggagle:
+    dragElement(document.getElementById("mm"));
+
+    function dragElement(elmnt) {
+        var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+        if (document.getElementById(elmnt.mm)) {
+            /* if present, the header is where you move the DIV from:*/
+            document.getElementById(elmnt.mm).onmousedown = dragMouseDown;
+        } else {
+            /* otherwise, move the DIV from anywhere inside the DIV:*/
+            elmnt.onmousedown = dragMouseDown;
+        }
+        function dragMouseDown(e) {
+            e = e || window.event;
+            e.preventDefault();
+            // get the mouse cursor position at startup:
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            document.onmouseup = closeDragElement;
+            // call a function whenever the cursor moves:
+            document.onmousemove = elementDrag;
+        }
+
+        function elementDrag(e) {
+            e = e || window.event;
+            e.preventDefault();
+            // calculate the new cursor position:
+            pos1 = pos3 - e.clientX;
+            pos2 = pos4 - e.clientY;
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            // set the element's new position:
+            elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+            elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+        }
+
+        function closeDragElement() {
+            /* stop moving when mouse button is released:*/
+            document.onmouseup = null;
+            document.onmousemove = null;
+        }
+    }
+
+
+    //Make the DIV element draggagle:
+    dragElement(document.getElementById("four"));
+
+    function dragElement(elmnt) {
+        var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+        if (document.getElementById(elmnt.four)) {
+            /* if present, the header is where you move the DIV from:*/
+            document.getElementById(elmnt.four).onmousedown = dragMouseDown;
+        } else {
+            /* otherwise, move the DIV from anywhere inside the DIV:*/
+            elmnt.onmousedown = dragMouseDown;
+        }
+        function dragMouseDown(e) {
+            e = e || window.event;
+            e.preventDefault();
+            // get the mouse cursor position at startup:
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            document.onmouseup = closeDragElement;
+            // call a function whenever the cursor moves:
+            document.onmousemove = elementDrag;
+        }
+
+        function elementDrag(e) {
+            e = e || window.event;
+            e.preventDefault();
+            // calculate the new cursor position:
+            pos1 = pos3 - e.clientX;
+            pos2 = pos4 - e.clientY;
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            // set the element's new position:
+            elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+            elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+        }
+
+        function closeDragElement() {
+            /* stop moving when mouse button is released:*/
+            document.onmouseup = null;
+            document.onmousemove = null;
+        }
+    } //Make the DIV element draggagle:
+    dragElement(document.getElementById("mita"));
+
+    function dragElement(elmnt) {
+        var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+        if (document.getElementById(elmnt.mita)) {
+            /* if present, the header is where you move the DIV from:*/
+            document.getElementById(elmnt.mita).onmousedown = dragMouseDown;
+        } else {
+            /* otherwise, move the DIV from anywhere inside the DIV:*/
+            elmnt.onmousedown = dragMouseDown;
+        }
+        function dragMouseDown(e) {
+            e = e || window.event;
+            e.preventDefault();
+            // get the mouse cursor position at startup:
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            document.onmouseup = closeDragElement;
+            // call a function whenever the cursor moves:
+            document.onmousemove = elementDrag;
+        }
+
+        function elementDrag(e) {
+            e = e || window.event;
+            e.preventDefault();
+            // calculate the new cursor position:
+            pos1 = pos3 - e.clientX;
+            pos2 = pos4 - e.clientY;
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            // set the element's new position:
+            elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+            elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+        }
+
+        function closeDragElement() {
+            /* stop moving when mouse button is released:*/
+            document.onmouseup = null;
+            document.onmousemove = null;
+        }
+    }
+</script>
