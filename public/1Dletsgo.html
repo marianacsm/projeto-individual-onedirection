@@ -21,6 +21,23 @@
     </div>
   </div>
   <div class="container_letsgo">
+
+    <div class="integrantes-for">
+      <div class="integrantes-favoritos">
+        <h3>Integrantes Favoritos</h3>
+      </div>
+      <div class="integrantes-titulo">
+        Cadastre em ordem seus integrantes favoritos
+      </div>
+      <div >
+        <input class="input-integrantes" id="in_integrante">
+      </div>
+      <button class="btn-integrantes" onclick="cadastrar()">Cadastrar</button>
+
+      <br>
+      <div id="div_lista" class="div-integrantes"></div>
+    </div>
+
     <div class="first_of_them">
       <img src="./assets/imgs/first_of_them_polaroid.png" style="height: 350px;">
       <div class="texto_first_of_them">
@@ -348,6 +365,20 @@
   </div>
 
   <script>
+
+var integrante = []
+
+function cadastrar() {
+    integrante.push(in_integrante.value)
+
+    div_lista.innerHTML = ''
+
+    for (var posicao = 0; posicao < integrante.length; posicao++) {
+        div_lista.innerHTML += `${integrante[posicao]} <br>`
+    }
+}
+
+
    let slideIndex = 0;
 showSlides();
 

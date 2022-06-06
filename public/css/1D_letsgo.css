@@ -40,6 +40,53 @@ font-weight: 500px;
 color: black;
 margin-right: 20px;
 }
+.integrantes-for {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.integrantes-favoritos {
+    font-family: 'Anybody',cursive;
+font-size: 20px;
+font-weight: 500px;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+.integrantes-titulo {
+    font-family: 'Anybody',cursive;
+    font-size: 20px;
+    font-weight: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.input-integrantes {
+    height: 30px;
+    width: 250px ;
+    border-radius: 3px;
+    border-color: #fff;
+    padding: 0 15px; 
+}
+.btn-integrantes {
+    display: flex;
+    height: 50px;
+    align-items: center;
+    background-color: #11001c;
+    color: #fff;
+    border-radius: 10px;
+      font-family: 'Anybody',cursive;
+      font-size: 20px;
+      font-weight: 500px;
+      margin-top: 10px;
+}
+.div-integrantes {
+    font-family: 'Anybody',cursive;
+    font-size: 20px;
+    font-weight: 500px;
+    margin-top: 10px;   
+}
 .container_letsgo{
   display: flex;
   flex-direction: column;

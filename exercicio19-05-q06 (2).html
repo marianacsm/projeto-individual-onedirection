@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício 20/05 - q06</title>
+</head>
+<body>
+    
+    <h3>Lista de filmes</h3>
+
+    <input placeholder="Novo filme" id="in_filme">
+    <button onclick="cadastrar()">Cadastrar</button>
+
+    <br>
+
+    <div id="div_filmes"></div>
+
+</body>
+</html>
+<script>
+var filmes = []
+
+function cadastrar() {
+    filmes.push(in_filme.value)
+
+    div_filmes.innerHTML = ''
+
+    // iterando no vetor
+    // ou seja, "navegando" em cada um dos elementos
+    for (var posicao = 0; posicao < filmes.length; posicao++) {
+        div_filmes.innerHTML += `${filmes[posicao]} <br>`
+    }
+}
+
+
+</script>
